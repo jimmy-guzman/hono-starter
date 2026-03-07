@@ -8,6 +8,12 @@ const TacoIdParam = z
   })
   .openapi("TacoIdParam");
 
+const internalServerError = {
+  content: { "application/json": { schema: ApiError } },
+  description: "Internal server error.",
+  summary: "Internal Server Error",
+};
+
 export const ListTacosRoute = createRoute({
   description: "Retrieve a list of all tacos.",
   method: "get",
@@ -18,6 +24,7 @@ export const ListTacosRoute = createRoute({
       description: "List of tacos",
       summary: "OK",
     },
+    500: internalServerError,
   },
   summary: "List Tacos",
   tags: ["Tacos"],
@@ -41,6 +48,7 @@ export const CreateTacoRoute = createRoute({
       description: "Validation Error",
       summary: "Validation Error",
     },
+    500: internalServerError,
   },
   summary: "Create Taco",
   tags: ["Tacos"],
@@ -67,6 +75,7 @@ export const GetTacoRoute = createRoute({
       description: "Validation Error",
       summary: "Validation Error",
     },
+    500: internalServerError,
   },
   summary: "Get Taco by ID",
   tags: ["Tacos"],
@@ -96,6 +105,7 @@ export const UpdateTacoRoute = createRoute({
       description: "Validation Error",
       summary: "Validation Error",
     },
+    500: internalServerError,
   },
   summary: "Update Taco",
   tags: ["Tacos"],
@@ -121,6 +131,7 @@ export const DeleteTacoRoute = createRoute({
       description: "Validation Error",
       summary: "Validation Error",
     },
+    500: internalServerError,
   },
   summary: "Delete Taco",
   tags: ["Tacos"],

@@ -52,6 +52,7 @@ export type UpdateTacoBody = z.infer<typeof UpdateTacoBody>;
 
 export const ApiError = z
   .object({
+    details: z.unknown().optional(),
     message: z
       .string()
       .openapi({ example: "Your request did not match the expected schema." }),

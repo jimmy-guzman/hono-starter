@@ -3,16 +3,20 @@ import { createMarkdownFromOpenApi } from "@scalar/openapi-to-markdown";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
+import { secureHeaders } from "hono/secure-headers";
 
-import { openapi } from "./config/docs";
 import { hono } from "./lib/hono";
+import { openapi } from "./openapi";
 import tacos from "./tacos/tacos.http";
 
 const api = hono();
 
+api.use(secureHeaders());
 api.use(logger());
 api.use(prettyJSON());
 api.use(cors());
+
+api.get("/health", (c) => c.json({ status: "ok" }));
 
 api.route("/", tacos);
 
@@ -45,5 +49,9 @@ api.get("/llms.txt", (c) => {
 });
 
 api.get("/", (c) => c.redirect("/docs", 301));
+
+api.notFound((c) => c.json({ message: "Not found", status: 404 }, 404));
+
+api.onError((err, c) => c.json({ message: err.message, status: 500 }, 500));
 
 export default api;

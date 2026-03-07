@@ -1,8 +1,6 @@
 import { Database } from "bun:sqlite";
 import { drizzle } from "drizzle-orm/bun-sqlite";
-import { Context, Effect, Layer } from "effect";
-
-import { AppConfig } from "@/env";
+import { Config, Context, Effect, Layer, Redacted } from "effect";
 
 type DrizzleClient = ReturnType<typeof drizzle>;
 
@@ -14,8 +12,8 @@ export class DbService extends Context.Tag("DbService")<
 export const DbLive = Layer.effect(
   DbService,
   Effect.gen(function* () {
-    const { databaseUrl } = yield* AppConfig;
-    const sqlite = new Database(databaseUrl);
+    const databaseUrl = yield* Config.redacted("DATABASE_URL");
+    const sqlite = new Database(Redacted.value(databaseUrl));
     const db = drizzle({ client: sqlite });
 
     return { db };
@@ -34,7 +32,8 @@ export const DbTest = Layer.effect(
         filling TEXT NOT NULL,
         notes TEXT,
         toppings TEXT NOT NULL,
-        "createdAt" INTEGER NOT NULL DEFAULT (unixepoch())
+        "createdAt" INTEGER NOT NULL DEFAULT (unixepoch()),
+        "updatedAt" INTEGER NOT NULL DEFAULT (unixepoch())
       )
     `);
 

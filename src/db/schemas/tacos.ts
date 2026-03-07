@@ -15,4 +15,8 @@ export const tacosTable = sqliteTable("tacos", (t) => ({
   name: t.text().notNull(),
   notes: t.text(),
   toppings: t.text({ mode: "json" }).$type<string[]>().notNull(),
+  updatedAt: t
+    .integer({ mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
 }));
