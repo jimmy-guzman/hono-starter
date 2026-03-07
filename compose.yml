@@ -1,0 +1,7 @@
+services:
+  api:
+    image: ghcr.io/jimmy-guzman/hono-starter:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=./local.db

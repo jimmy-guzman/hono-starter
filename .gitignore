@@ -35,3 +35,4 @@ dist/
 # sqlite
 *.sqlite
 *.sqlite-*
+*.db

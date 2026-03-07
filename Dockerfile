@@ -24,4 +24,7 @@ EXPOSE 3000
 
 ENV DATABASE_URL=/app/data/app.db
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -qO- http://localhost:3000/health || exit 1
+
 ENTRYPOINT ["bun", "run", "src/index.ts"]

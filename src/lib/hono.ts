@@ -6,6 +6,7 @@ export const hono = () => {
       if (!result.success) {
         return c.json(
           {
+            details: result.error.flatten(),
             message: "Your request did not match the expected schema.",
             status: 422,
           },
