@@ -4,6 +4,7 @@ import {
   createSelectSchema,
   createUpdateSchema,
 } from "drizzle-zod";
+
 import { tacosTable } from "@/db/schemas/tacos";
 
 export const Taco = createSelectSchema(tacosTable, {
@@ -13,6 +14,8 @@ export const Taco = createSelectSchema(tacosTable, {
   notes: (s) => s.openapi({ example: "Extra crispy, light on the salt" }),
   toppings: (s) => s.openapi({ example: ["cilantro", "onion", "lime"] }),
 }).openapi("Taco");
+
+export type Taco = z.infer<typeof Taco>;
 
 export const NewTacoBody = createInsertSchema(tacosTable, {
   filling: (s) => s.min(1).openapi({ example: "nopales" }),

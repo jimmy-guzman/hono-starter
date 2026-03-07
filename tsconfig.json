@@ -1,29 +1,29 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "esnext",
     "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
+
+    "baseUrl": ".",
+    "esModuleInterop": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-
-    "module": "preserve",
-    "noEmit": true,
-
-    "lib": ["esnext"],
 
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
 
-    "baseUrl": ".",
+    "lib": ["esnext"],
+
+    "module": "preserve",
+    "moduleDetection": "force",
+    "noEmit": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+
+    "strict": true,
+    "target": "esnext",
+    "verbatimModuleSyntax": true
   }
 }

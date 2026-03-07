@@ -6,7 +6,7 @@ import { prettyJSON } from "hono/pretty-json";
 
 import { openapi } from "./config/docs";
 import { hono } from "./lib/hono";
-import tacos from "./routes/tacos";
+import tacos from "./tacos/tacos.http";
 
 const api = hono();
 

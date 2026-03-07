@@ -1,14 +1,32 @@
 # 🌮 Tacos API
 
-A simple REST API built with [Hono](https://hono.dev), [Bun](https://bun.sh), and [Drizzle ORM](https://orm.drizzle.team).
+A simple REST API built with [Hono](https://hono.dev), [Bun](https://bun.sh), [Drizzle ORM](https://orm.drizzle.team), and [Effect-TS](https://effect.website).
 
 ## Features
 
-- 🚀 Fast and lightweight API with Hono
-- 📝 Auto-generated OpenAPI documentation with Scalar
-- 🗄️ Database management with Drizzle ORM
-- ✨ Code quality with Biome
-- 🐳 Docker support
+- Typed, composable effects with Effect-TS
+- Typed errors — no unhandled exceptions
+- Dependency injection via Effect Layers (swappable for tests)
+- Fast and lightweight HTTP layer with Hono
+- Auto-generated OpenAPI documentation with Scalar
+- Database management with Drizzle ORM
+- Code quality with Biome
+- Docker support
+
+## Architecture
+
+Each domain resource lives in its own directory under `src/` (e.g. `src/tacos/`):
+
+| File             | Role                               |
+| ---------------- | ---------------------------------- |
+| `*.schema.ts`    | Zod schemas and TypeScript types   |
+| `*.api.ts`       | OpenAPI route definitions          |
+| `*.repo.ts`      | Data access layer (Effect service) |
+| `*.http.ts`      | Hono route handlers                |
+| `*.errors.ts`    | Typed error classes                |
+| `*.repo.test.ts` | Unit tests (in-memory DB layer)    |
+
+Dependencies are injected via Effect `Layer`s — `DbLive` for production, `DbTest` (in-memory SQLite) for tests.
 
 ## Getting Started
 
@@ -87,7 +105,7 @@ The Dockerfile includes:
 
 Interactive API documentation is available at `/docs` when running the server.
 
-- OpenAPI JSON:  `/openapi.json`
+- OpenAPI JSON: `/openapi.json`
 - LLMs.txt format: `/llms.txt`
 
 ## Scripts
@@ -103,3 +121,4 @@ Interactive API documentation is available at `/docs` when running the server.
 - `format` - Check code formatting
 - `format:fix` - Fix code formatting
 - `typecheck` - Type check with TypeScript
+- `test` - Run unit tests

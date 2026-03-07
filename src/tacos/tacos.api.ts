@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 
-import { ApiError, NewTacoBody, Taco, UpdateTacoBody } from "./tacos.entities";
+import { ApiError, NewTacoBody, Taco, UpdateTacoBody } from "./tacos.schema";
 
 const TacoIdParam = z
   .object({

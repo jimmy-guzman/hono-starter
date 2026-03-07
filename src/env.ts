@@ -1,9 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { createEnv } from "@t3-oss/env-core";
+import { Config } from "effect";
 
-export const env = createEnv({
-  runtimeEnv: process.env,
-  server: {
-    DATABASE_URL: z.string("Please provide a database URL").min(1),
-  },
+export const AppConfig = Config.all({
+  databaseUrl: Config.string("DATABASE_URL"),
 });
