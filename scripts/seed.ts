@@ -1,6 +1,10 @@
+import { Database } from "bun:sqlite";
 import { faker } from "@faker-js/faker";
-import { db } from "@/db/client";
+import { drizzle } from "drizzle-orm/bun-sqlite";
 import { tacosTable } from "@/db/schemas/tacos";
+
+// biome-ignore lint/style/noNonNullAssertion: seed script runs outside Effect runtime
+const db = drizzle({ client: new Database(process.env.DATABASE_URL!) });
 
 const fillings = [
   "nopales",

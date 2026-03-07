@@ -1,11 +1,10 @@
 import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
-import { env } from "./src/env";
-
 export default defineConfig({
   dbCredentials: {
-    url: env.DATABASE_URL,
+    // biome-ignore lint/style/noNonNullAssertion: drizzle-kit runs outside of Effect runtime
+    url: process.env.DATABASE_URL!,
   },
   dialect: "sqlite",
   out: "./drizzle",

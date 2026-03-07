@@ -3,6 +3,7 @@
     "buildcache",
     "buildx",
     "bunx",
+    "libsql",
     "llms",
     "paralleldrive",
     "treeify",
