@@ -1,4 +1,4 @@
-# 🌮 Tacos API
+# Hono Starter
 
 A simple REST API built with [Hono](https://hono.dev), [Bun](https://bun.sh), [Drizzle ORM](https://orm.drizzle.team), and [Effect-TS](https://effect.website).
 
@@ -64,20 +64,20 @@ The API will be available at `http://localhost:3000` (or your configured port).
 
 ### Run from GitHub Packages
 
-The easiest way to run the API is using the pre-built image from [GitHub Packages](https://github.com/jimmy-guzman/tacos-api/pkgs/container/tacos-api):
+The easiest way to run the API is using the pre-built image from [GitHub Packages](https://github.com/jimmy-guzman/hono-starter/pkgs/container/hono-starter):
 
 ```bash
-docker run -p 3000:3000 ghcr.io/jimmy-guzman/tacos-api:latest
+docker run -p 3000:3000 ghcr.io/jimmy-guzman/hono-starter:latest
 ```
 
 ### Build and Run Locally
 
 ```bash
 # Build the Docker image
-docker build -t tacos-api .
+docker build -t hono-starter .
 
 # Run the container
-docker run -p 3000:3000 tacos-api
+docker run -p 3000:3000 hono-starter
 ```
 
 The API will be available at `http://localhost:3000`.
@@ -122,3 +122,5 @@ Interactive API documentation is available at `/docs` when running the server.
 - `format:fix` - Fix code formatting
 - `typecheck` - Type check with TypeScript
 - `test` - Run unit tests
+- `deps:dedupe` - Dedupe dependencies
+- `deps:up` - Update dependencies interactively
