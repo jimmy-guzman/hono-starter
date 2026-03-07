@@ -8,7 +8,7 @@ Built with [Hono](https://hono.dev) and [Drizzle](https://orm.drizzle.team/).
 - [LLM Documentation](/llms.txt)
 - [OpenAPI JSON](/openapi.json)
 - [GitHub Repository](https://github.com/jimmy-guzman/hono-starter)`,
-    title: "Tacos API",
+    title: "Hono Starter API",
     version: "0.0.0",
   },
   version: "3.1.1",
