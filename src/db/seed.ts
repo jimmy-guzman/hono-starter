@@ -29,7 +29,7 @@ const toppings = [
   "pickled onions",
 ];
 
-export function generateTaco() {
+function generateTaco() {
   const numToppings = faker.number.int({ max: 5, min: 2 });
   const selectedToppings = faker.helpers.arrayElements(toppings, numToppings);
 
