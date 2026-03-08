@@ -6,8 +6,6 @@
 app = 'hono-starter-patient-feather-8254'
 primary_region = 'ord'
 
-[build]
-
 [env]
   DATABASE_URL = '/app/data/app.db'
 
