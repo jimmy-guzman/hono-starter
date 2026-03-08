@@ -1,0 +1,79 @@
+{
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  },
+  "dialect": "sqlite",
+  "enums": {},
+  "id": "7d1e154e-e335-4bb2-8b8e-0e03595c5750",
+  "internal": {
+    "indexes": {}
+  },
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "tacos": {
+      "checkConstraints": {},
+      "columns": {
+        "createdAt": {
+          "autoincrement": false,
+          "default": "(unixepoch())",
+          "name": "createdAt",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "integer"
+        },
+        "filling": {
+          "autoincrement": false,
+          "name": "filling",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "notNull": true,
+          "primaryKey": true,
+          "type": "text"
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "notes": {
+          "autoincrement": false,
+          "name": "notes",
+          "notNull": false,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "toppings": {
+          "autoincrement": false,
+          "name": "toppings",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "updatedAt": {
+          "autoincrement": false,
+          "default": "(unixepoch())",
+          "name": "updatedAt",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "integer"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "foreignKeys": {},
+      "indexes": {},
+      "name": "tacos",
+      "uniqueConstraints": {}
+    }
+  },
+  "version": "6",
+  "views": {}
+}

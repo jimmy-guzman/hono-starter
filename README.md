@@ -59,15 +59,11 @@ cp .env.example .env
 # Start development server with hot reload
 bun run dev
 
-# Run database migrations
-bun run db:push
-
-# Seed database with sample data
-bun run db:seed
-
 # Open Drizzle Studio
 bun run db:studio
 ```
+
+Migrations and seed data run automatically on startup. The server applies any pending migrations and seeds the database if it is empty before accepting requests.
 
 The API will be available at `http://localhost:3000`.
 
@@ -104,12 +100,14 @@ Then register the routes in `src/index.ts`.
 
 ## Docker
 
+The server runs migrations and seeds the database automatically on startup. Mount a named volume at `/app/data` to persist the SQLite database across container restarts.
+
 ### Run from GitHub Packages
 
 The easiest way to run the API is using the pre-built image from [GitHub Packages](https://github.com/jimmy-guzman/hono-starter/pkgs/container/hono-starter):
 
 ```bash
-docker run -p 3000:3000 -e DATABASE_URL=./local.db ghcr.io/jimmy-guzman/hono-starter:latest
+docker run -p 3000:3000 -v hono-starter-data:/app/data ghcr.io/jimmy-guzman/hono-starter:latest
 ```
 
 ### Build and Run Locally
@@ -118,8 +116,11 @@ docker run -p 3000:3000 -e DATABASE_URL=./local.db ghcr.io/jimmy-guzman/hono-sta
 # Build the Docker image
 docker build -t hono-starter .
 
+# Build with a custom database path
+docker build --build-arg DATABASE_URL=/app/data/custom.db -t hono-starter .
+
 # Run the container
-docker run -p 3000:3000 -e DATABASE_URL=./local.db hono-starter
+docker run -p 3000:3000 -v hono-starter-data:/app/data hono-starter
 ```
 
 ### With Docker Compose
@@ -134,6 +135,27 @@ docker compose up -d
 # Stop the service
 docker compose down
 ```
+
+Data is persisted in the `data` named volume across restarts.
+
+## Fly.io
+
+Requires the [Fly CLI](https://fly.io/docs/flyctl/install/) and a Fly.io account.
+
+```bash
+# First deploy
+fly launch --no-deploy
+fly volumes create data --size 1 --region ord
+fly deploy
+
+# Subsequent deploys
+fly deploy
+```
+
+> [!NOTE]
+> The `--no-deploy` flag lets you create the volume before the first deploy so the app starts with storage already attached. The volume is mounted at `/app/data` and persists the SQLite database across deployments. Migrations and seed data run automatically on startup. Update the `primary_region` in `fly.toml` and the `--region` flag to the [region](https://fly.io/docs/reference/regions/) nearest you.
+>
+> A `FLY_API_TOKEN` secret must be added to the repository's GitHub Actions secrets to enable continuous deployment via `.github/workflows/fly-deploy.yml`. Generate one with `fly tokens create deploy`.
 
 ## Scripts
 

@@ -3,9 +3,13 @@
     "buildcache",
     "buildx",
     "bunx",
+    "cpus",
+    "flyctl",
+    "hono",
     "libsql",
     "llms",
     "paralleldrive",
+    "superfly",
     "treeify",
     "unixepoch"
   ],

@@ -1,6 +1,10 @@
 import { Database } from "bun:sqlite";
 import { drizzle } from "drizzle-orm/bun-sqlite";
+import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import { Config, Context, Effect, Layer, Redacted } from "effect";
+
+import { tacosTable } from "./schemas/tacos";
+import { generateTacos } from "./seed";
 
 type DrizzleClient = ReturnType<typeof drizzle>;
 
@@ -42,3 +46,27 @@ export const DbTest = Layer.effect(
     return { db };
   }),
 );
+
+export const runMigrations = Effect.gen(function* () {
+  const { db } = yield* DbService;
+
+  yield* Effect.promise(() =>
+    Promise.resolve(migrate(db, { migrationsFolder: "./drizzle" })),
+  );
+});
+
+export const runSeed = Effect.gen(function* () {
+  const { db } = yield* DbService;
+
+  const existing = yield* Effect.promise(() =>
+    Promise.resolve(db.select().from(tacosTable).limit(1)),
+  );
+
+  if (existing.length === 0) {
+    const tacos = generateTacos();
+
+    yield* Effect.promise(() =>
+      Promise.resolve(db.insert(tacosTable).values(tacos)),
+    );
+  }
+});

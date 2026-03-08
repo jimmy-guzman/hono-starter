@@ -3,5 +3,9 @@ services:
     image: ghcr.io/jimmy-guzman/hono-starter:latest
     ports:
       - "3000:3000"
-    environment:
-      - DATABASE_URL=./local.db
+    restart: unless-stopped
+    volumes:
+      - data:/app/data
+
+volumes:
+  data:
