@@ -1,5 +1,6 @@
 import { Database } from "bun:sqlite";
 import { drizzle } from "drizzle-orm/bun-sqlite";
+import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import { Config, Context, Effect, Layer, Redacted } from "effect";
 
 type DrizzleClient = ReturnType<typeof drizzle>;
@@ -42,3 +43,11 @@ export const DbTest = Layer.effect(
     return { db };
   }),
 );
+
+export const runMigrations = Effect.gen(function* () {
+  const { db } = yield* DbService;
+
+  yield* Effect.promise(() =>
+    Promise.resolve(migrate(db, { migrationsFolder: "./drizzle" })),
+  );
+});

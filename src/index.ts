@@ -1,10 +1,12 @@
 import { Scalar } from "@scalar/hono-api-reference";
 import { createMarkdownFromOpenApi } from "@scalar/openapi-to-markdown";
+import { Config, Effect } from "effect";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { secureHeaders } from "hono/secure-headers";
 
+import { DbLive, runMigrations } from "./db/client";
 import { hono } from "./lib/hono";
 import { openapi } from "./openapi";
 import tacos from "./tacos/tacos.http";
@@ -54,4 +56,12 @@ api.notFound((c) => c.json({ message: "Not found", status: 404 }, 404));
 
 api.onError((err, c) => c.json({ message: err.message, status: 500 }, 500));
 
-export default api;
+await Effect.runPromise(
+  Effect.gen(function* () {
+    yield* runMigrations;
+
+    const port = yield* Config.integer("PORT").pipe(Config.withDefault(3000));
+
+    Bun.serve({ fetch: api.fetch, hostname: "0.0.0.0", port });
+  }).pipe(Effect.provide(DbLive)),
+);

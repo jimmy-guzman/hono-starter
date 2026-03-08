@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowJs": true,
 
-    "baseUrl": ".",
     "esModuleInterop": true,
     "isolatedModules": true,
 
@@ -17,7 +16,7 @@
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -25,5 +24,6 @@
     "strict": true,
     "target": "esnext",
     "verbatimModuleSyntax": true
-  }
+  },
+  "exclude": ["dist"]
 }
