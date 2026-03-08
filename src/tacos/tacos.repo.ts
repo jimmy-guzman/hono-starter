@@ -10,19 +10,30 @@ export const findAll = Effect.gen(function* () {
   const { db } = yield* DbService;
 
   return yield* Effect.tryPromise({
-    catch: (cause) => new DatabaseError({ cause }),
-    try: () => db.select().from(tacosTable),
+    catch: (cause) => {
+      return new DatabaseError({ cause });
+    },
+    try: () => {
+      return db.select().from(tacosTable);
+    },
   });
 });
 
-export const findById = (id: string) =>
-  Effect.gen(function* () {
+export const findById = (id: string) => {
+  return Effect.gen(function* () {
     const { db } = yield* DbService;
 
     const [taco] = yield* Effect.tryPromise({
-      catch: (cause) => new DatabaseError({ cause }),
-      try: () =>
-        db.select().from(tacosTable).where(eq(tacosTable.id, id)).limit(1),
+      catch: (cause) => {
+        return new DatabaseError({ cause });
+      },
+      try: () => {
+        return db
+          .select()
+          .from(tacosTable)
+          .where(eq(tacosTable.id, id))
+          .limit(1);
+      },
     });
 
     if (!taco) {
@@ -31,14 +42,19 @@ export const findById = (id: string) =>
 
     return taco;
   });
+};
 
-export const create = (data: NewTacoBody) =>
-  Effect.gen(function* () {
+export const create = (data: NewTacoBody) => {
+  return Effect.gen(function* () {
     const { db } = yield* DbService;
 
     const [created] = yield* Effect.tryPromise({
-      catch: (cause) => new DatabaseError({ cause }),
-      try: () => db.insert(tacosTable).values(data).returning(),
+      catch: (cause) => {
+        return new DatabaseError({ cause });
+      },
+      try: () => {
+        return db.insert(tacosTable).values(data).returning();
+      },
     });
 
     if (!created) {
@@ -49,19 +65,23 @@ export const create = (data: NewTacoBody) =>
 
     return created;
   });
+};
 
-export const update = (id: string, data: UpdateTacoBody) =>
-  Effect.gen(function* () {
+export const update = (id: string, data: UpdateTacoBody) => {
+  return Effect.gen(function* () {
     const { db } = yield* DbService;
 
     const [updated] = yield* Effect.tryPromise({
-      catch: (cause) => new DatabaseError({ cause }),
-      try: () =>
-        db
+      catch: (cause) => {
+        return new DatabaseError({ cause });
+      },
+      try: () => {
+        return db
           .update(tacosTable)
           .set(data)
           .where(eq(tacosTable.id, id))
-          .returning(),
+          .returning();
+      },
     });
 
     if (!updated) {
@@ -70,14 +90,19 @@ export const update = (id: string, data: UpdateTacoBody) =>
 
     return updated;
   });
+};
 
-export const remove = (id: string) =>
-  Effect.gen(function* () {
+export const remove = (id: string) => {
+  return Effect.gen(function* () {
     const { db } = yield* DbService;
 
     const [deleted] = yield* Effect.tryPromise({
-      catch: (cause) => new DatabaseError({ cause }),
-      try: () => db.delete(tacosTable).where(eq(tacosTable.id, id)).returning(),
+      catch: (cause) => {
+        return new DatabaseError({ cause });
+      },
+      try: () => {
+        return db.delete(tacosTable).where(eq(tacosTable.id, id)).returning();
+      },
     });
 
     if (!deleted) {
@@ -86,3 +111,4 @@ export const remove = (id: string) =>
 
     return deleted;
   });
+};

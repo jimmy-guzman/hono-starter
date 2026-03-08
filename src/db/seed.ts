@@ -36,9 +36,14 @@ function generateTaco() {
   return {
     filling: faker.helpers.arrayElement(fillings),
     name: `${faker.word.adjective()} ${faker.helpers.arrayElement(fillings)} taco`,
-    notes: faker.helpers.maybe(() => faker.lorem.sentence(), {
-      probability: 0.6,
-    }),
+    notes: faker.helpers.maybe(
+      () => {
+        return faker.lorem.sentence();
+      },
+      {
+        probability: 0.6,
+      },
+    ),
     toppings: selectedToppings,
   };
 }
