@@ -11,7 +11,9 @@ export const tacosTable = sqliteTable("tacos", (t) => ({
   id: t
     .text()
     .primaryKey()
-    .$defaultFn(() => typeid("taco").toString()),
+    .$defaultFn(() => {
+      return typeid("taco").toString();
+    }),
   name: t.text().notNull(),
   notes: t.text(),
   toppings: t.text({ mode: "json" }).$type<string[]>().notNull(),

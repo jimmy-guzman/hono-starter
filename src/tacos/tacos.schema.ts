@@ -8,20 +8,38 @@ import {
 import { tacosTable } from "@/db/schemas/tacos";
 
 export const Taco = createSelectSchema(tacosTable, {
-  filling: (s) => s.openapi({ example: "nopales" }),
-  id: (s) => s.openapi({ example: "taco_01h2xcejqtf2nbrexx3vqjhp41" }),
-  name: (s) => s.openapi({ example: "Al Pastor Perfection" }),
-  notes: (s) => s.openapi({ example: "Extra crispy, light on the salt" }),
-  toppings: (s) => s.openapi({ example: ["cilantro", "onion", "lime"] }),
+  filling: (s) => {
+    return s.openapi({ example: "nopales" });
+  },
+  id: (s) => {
+    return s.openapi({ example: "taco_01h2xcejqtf2nbrexx3vqjhp41" });
+  },
+  name: (s) => {
+    return s.openapi({ example: "Al Pastor Perfection" });
+  },
+  notes: (s) => {
+    return s.openapi({ example: "Extra crispy, light on the salt" });
+  },
+  toppings: (s) => {
+    return s.openapi({ example: ["cilantro", "onion", "lime"] });
+  },
 }).openapi("Taco");
 
 export type Taco = z.infer<typeof Taco>;
 
 export const NewTacoBody = createInsertSchema(tacosTable, {
-  filling: (s) => s.min(1).openapi({ example: "nopales" }),
-  name: (s) => s.min(1).openapi({ example: "Al Pastor Perfection" }),
-  notes: (s) => s.openapi({ example: "Extra crispy, light on the salt" }),
-  toppings: (s) => s.openapi({ example: ["cilantro", "onion", "lime"] }),
+  filling: (s) => {
+    return s.min(1).openapi({ example: "nopales" });
+  },
+  name: (s) => {
+    return s.min(1).openapi({ example: "Al Pastor Perfection" });
+  },
+  notes: (s) => {
+    return s.openapi({ example: "Extra crispy, light on the salt" });
+  },
+  toppings: (s) => {
+    return s.openapi({ example: ["cilantro", "onion", "lime"] });
+  },
 })
   .pick({
     filling: true,
@@ -34,10 +52,18 @@ export const NewTacoBody = createInsertSchema(tacosTable, {
 export type NewTacoBody = z.infer<typeof NewTacoBody>;
 
 export const UpdateTacoBody = createUpdateSchema(tacosTable, {
-  filling: (s) => s.min(1).openapi({ example: "carnitas" }),
-  name: (s) => s.min(1).openapi({ example: "Al Pastor Perfection" }),
-  notes: (s) => s.openapi({ example: "Updated notes" }),
-  toppings: (s) => s.openapi({ example: ["cilantro", "onion"] }),
+  filling: (s) => {
+    return s.min(1).openapi({ example: "carnitas" });
+  },
+  name: (s) => {
+    return s.min(1).openapi({ example: "Al Pastor Perfection" });
+  },
+  notes: (s) => {
+    return s.openapi({ example: "Updated notes" });
+  },
+  toppings: (s) => {
+    return s.openapi({ example: ["cilantro", "onion"] });
+  },
 })
   .pick({
     filling: true,

@@ -47,7 +47,7 @@ export const DbTest = Layer.effect(
 export const runMigrations = Effect.gen(function* () {
   const { db } = yield* DbService;
 
-  yield* Effect.promise(() =>
-    Promise.resolve(migrate(db, { migrationsFolder: "./drizzle" })),
-  );
+  yield* Effect.promise(() => {
+    return Promise.resolve(migrate(db, { migrationsFolder: "./drizzle" }));
+  });
 });

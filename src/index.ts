@@ -18,7 +18,9 @@ api.use(logger());
 api.use(prettyJSON());
 api.use(cors());
 
-api.get("/health", (c) => c.json({ status: "ok" }));
+api.get("/health", (c) => {
+  return c.json({ status: "ok" });
+});
 
 api.route("/", tacos);
 
@@ -42,7 +44,9 @@ api.get(
   }),
 );
 
-api.get("/openapi.json", (c) => c.json(apiSchema));
+api.get("/openapi.json", (c) => {
+  return c.json(apiSchema);
+});
 
 api.get("/llms.txt", (c) => {
   c.header("Content-Type", "text/plain; charset=utf-8");
@@ -50,11 +54,17 @@ api.get("/llms.txt", (c) => {
   return c.text(apiMarkdown);
 });
 
-api.get("/", (c) => c.redirect("/docs", 301));
+api.get("/", (c) => {
+  return c.redirect("/docs", 301);
+});
 
-api.notFound((c) => c.json({ message: "Not found", status: 404 }, 404));
+api.notFound((c) => {
+  return c.json({ message: "Not found", status: 404 }, 404);
+});
 
-api.onError((err, c) => c.json({ message: err.message, status: 500 }, 500));
+api.onError((err, c) => {
+  return c.json({ message: err.message, status: 500 }, 500);
+});
 
 await Effect.runPromise(
   Effect.gen(function* () {
