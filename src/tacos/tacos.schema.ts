@@ -1,45 +1,37 @@
 import { z } from "@hono/zod-openapi";
-import {
-  createInsertSchema,
-  createSelectSchema,
-  createUpdateSchema,
-} from "drizzle-zod";
+import { createSchemaFactory } from "drizzle-orm/zod";
 
 import { tacosTable } from "@/db/schemas/tacos";
 
+const { createInsertSchema, createSelectSchema, createUpdateSchema } =
+  createSchemaFactory({ zodInstance: z });
+
+const toppings = z
+  .array(z.string())
+  .openapi({ example: ["cilantro", "onion", "lime"] });
+
 export const Taco = createSelectSchema(tacosTable, {
-  filling: (s) => {
-    return s.openapi({ example: "nopales" });
-  },
-  id: (s) => {
-    return s.openapi({ example: "taco_01h2xcejqtf2nbrexx3vqjhp41" });
-  },
-  name: (s) => {
-    return s.openapi({ example: "Al Pastor Perfection" });
-  },
-  notes: (s) => {
-    return s.openapi({ example: "Extra crispy, light on the salt" });
-  },
-  toppings: (s) => {
-    return s.openapi({ example: ["cilantro", "onion", "lime"] });
-  },
+  filling: z.string().openapi({ example: "nopales" }),
+  id: z.string().openapi({ example: "taco_01h2xcejqtf2nbrexx3vqjhp41" }),
+  name: z.string().openapi({ example: "Al Pastor Perfection" }),
+  notes: z
+    .string()
+    .nullable()
+    .openapi({ example: "Extra crispy, light on the salt" }),
+  toppings,
 }).openapi("Taco");
 
 export type Taco = z.infer<typeof Taco>;
 
 export const NewTacoBody = createInsertSchema(tacosTable, {
-  filling: (s) => {
-    return s.min(1).openapi({ example: "nopales" });
-  },
-  name: (s) => {
-    return s.min(1).openapi({ example: "Al Pastor Perfection" });
-  },
-  notes: (s) => {
-    return s.openapi({ example: "Extra crispy, light on the salt" });
-  },
-  toppings: (s) => {
-    return s.openapi({ example: ["cilantro", "onion", "lime"] });
-  },
+  filling: z.string().min(1).openapi({ example: "nopales" }),
+  name: z.string().min(1).openapi({ example: "Al Pastor Perfection" }),
+  notes: z
+    .string()
+    .nullable()
+    .optional()
+    .openapi({ example: "Extra crispy, light on the salt" }),
+  toppings,
 })
   .pick({
     filling: true,
@@ -52,18 +44,10 @@ export const NewTacoBody = createInsertSchema(tacosTable, {
 export type NewTacoBody = z.infer<typeof NewTacoBody>;
 
 export const UpdateTacoBody = createUpdateSchema(tacosTable, {
-  filling: (s) => {
-    return s.min(1).openapi({ example: "carnitas" });
-  },
-  name: (s) => {
-    return s.min(1).openapi({ example: "Al Pastor Perfection" });
-  },
-  notes: (s) => {
-    return s.openapi({ example: "Updated notes" });
-  },
-  toppings: (s) => {
-    return s.openapi({ example: ["cilantro", "onion"] });
-  },
+  filling: z.string().min(1).openapi({ example: "carnitas" }),
+  name: z.string().min(1).openapi({ example: "Al Pastor Perfection" }),
+  notes: z.string().nullable().optional().openapi({ example: "Updated notes" }),
+  toppings: z.array(z.string()).openapi({ example: ["cilantro", "onion"] }),
 })
   .pick({
     filling: true,
